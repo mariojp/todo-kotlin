@@ -1,10 +1,8 @@
 package br.com.mariojp.todo.ui
 
-import android.app.Activity
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
-import br.com.mariojp.todo.R
+import androidx.appcompat.app.AppCompatActivity
+import br.com.mariojp.todo.data.ToDoItem
 import br.com.mariojp.todo.databinding.ActivityListTodoBinding
 
 class ListToDoActivity : AppCompatActivity() {
@@ -13,11 +11,10 @@ class ListToDoActivity : AppCompatActivity() {
         val binding = ActivityListTodoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.activityListTodoId.setText("1")
+        binding.activityListTodolist.adapter =
+            ListToDoAdapter(this, arrayListOf( ToDoItem(1, "Titulo 1", "Descricao 1"),
+                ToDoItem(2, "Titulo 2", "Descricao 2"),))
 
-        binding.activityListTodoTitle.setText("Estudar kotlin")
-
-        binding.activityListTodoDescription.setText("Estudar kotlin para Mobile")
 
     }
 }
