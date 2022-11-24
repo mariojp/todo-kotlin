@@ -3,4 +3,7 @@
     <string name="description">DESCRIÇÃO</string>
     <string name="title">TITULO</string>
     <string name="id">ID</string>
+    <string name="salvar">Salvar</string>
+    <string name="hint_title">Title</string>
+    <string name="hint_description">Description</string>
 </resources>

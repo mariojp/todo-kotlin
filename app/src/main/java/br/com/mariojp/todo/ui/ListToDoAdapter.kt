@@ -9,8 +9,11 @@ import br.com.mariojp.todo.databinding.TodoItemBinding
 
 class ListToDoAdapter(
     private val context: Context,
-    private val todos : List<ToDoItem>,
+    todos : List<ToDoItem>,
 ) : RecyclerView.Adapter<ListToDoAdapter.ViewHolder>() {
+
+    private val todos = todos.toMutableList()
+
 
     class ViewHolder(private val view: TodoItemBinding) : RecyclerView.ViewHolder(view.root) {
 
@@ -33,4 +36,10 @@ class ListToDoAdapter(
 
     override fun getItemCount(): Int = todos.size
 
+
+    fun update(todos: List<ToDoItem>) {
+        this.todos.clear()
+        this.todos.addAll(todos)
+        notifyDataSetChanged()
+    }
 }

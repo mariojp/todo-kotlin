@@ -1,20 +1,46 @@
 package br.com.mariojp.todo.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import br.com.mariojp.todo.data.ToDoItem
+import br.com.mariojp.todo.data.ToDoItemDao
 import br.com.mariojp.todo.databinding.ActivityListTodoBinding
 
 class ListToDoActivity : AppCompatActivity() {
+
+    private val dao = ToDoItemDao()
+    private val adapter = ListToDoAdapter(context = this, dao.buscaTodos())
+    private val binding by lazy {
+        ActivityListTodoBinding.inflate(layoutInflater)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityListTodoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        configuraFab()
+        configuraRecyclerView()
+    }
 
-        binding.activityListTodolist.adapter =
-            ListToDoAdapter(this, arrayListOf( ToDoItem(1, "Titulo 1", "Descricao 1"),
-                ToDoItem(2, "Titulo 2", "Descricao 2"),))
+    private fun configuraFab() {
+        val fab = binding.activityListTodoFab
+        fab.setOnClickListener {
+            vaiParaFormulario()
+        }
+    }
 
+    private fun vaiParaFormulario() {
+        val intent = Intent(this, FormularioActivity::class.java)
+        startActivity(intent)
+    }
 
+    private fun configuraRecyclerView() {
+        val recyclerView = binding.activityListTodolist
+        recyclerView.adapter = adapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adapter.update(dao.buscaTodos())
     }
 }
