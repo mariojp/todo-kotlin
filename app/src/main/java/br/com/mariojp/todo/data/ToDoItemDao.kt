@@ -1,29 +1,22 @@
 package br.com.mariojp.todo.data
 
-import java.util.concurrent.atomic.AtomicLong
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
 
-class ToDoItemDao {
+@Dao
+interface ToDoItemDao {
 
-    fun adiciona(toDoItem: ToDoItem) {
-        toDoItem.id = index.incrementAndGet()
-        horarios.add(toDoItem)
-    }
+    @Insert
+    fun adiciona(toDoItem: ToDoItem)
 
-    fun remove(toDoItem: ToDoItem) {
-        horarios.remove(toDoItem)
-    }
+    @Delete
+    fun remove(toDoItem: ToDoItem)
 
-    fun buscaTodos(): List<ToDoItem> {
-        return horarios.toList()
-    }
+    @Query("SELECT * FROM ToDoItem")
+    fun buscaTodos(): List<ToDoItem>
 
-    companion object {
-        private val index = AtomicLong(0)
-        private val horarios = mutableListOf<ToDoItem>(
-            ToDoItem(
-                1, "Titulo 1", "Descricao 1"
-            )
-        )
-    }
+
 
 }

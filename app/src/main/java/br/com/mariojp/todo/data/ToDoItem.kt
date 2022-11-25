@@ -1,8 +1,13 @@
 package br.com.mariojp.todo.data
 
-data class ToDoItem(
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-    var id : Long,
+
+@Entity
+data class ToDoItem(
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0L,
     val title : String,
     val description: String
 

@@ -9,7 +9,7 @@ import br.com.mariojp.todo.databinding.TodoItemBinding
 
 class ListToDoAdapter(
     private val context: Context,
-    todos : List<ToDoItem>,
+    todos : List<ToDoItem> = emptyList(),
 ) : RecyclerView.Adapter<ListToDoAdapter.ViewHolder>() {
 
     private val todos = todos.toMutableList()
