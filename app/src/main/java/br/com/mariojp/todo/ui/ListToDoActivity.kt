@@ -2,6 +2,7 @@ package br.com.mariojp.todo.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import br.com.mariojp.todo.data.ToDoDatabase
 import br.com.mariojp.todo.databinding.ActivityListTodoBinding
@@ -42,7 +43,13 @@ class ListToDoActivity : AppCompatActivity() {
     private fun configuraRecyclerView() {
         val recyclerView = binding.activityListTodolist
         recyclerView.adapter = adapter
-
+        adapter.eventoClick = { item ->
+            Log.i("ListaProdutosActivity", "quandoClica: ${item.title}")
+            val intent = Intent(this, FormularioActivity::class.java).apply {
+                putExtra("ITEM",item)
+            }
+            startActivity(intent)
+        }
     }
 
 }
