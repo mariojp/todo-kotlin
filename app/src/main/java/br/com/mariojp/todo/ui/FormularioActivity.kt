@@ -1,11 +1,15 @@
 package br.com.mariojp.todo.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import br.com.mariojp.todo.R
 import br.com.mariojp.todo.data.ToDoDatabase
 import br.com.mariojp.todo.data.ToDoItem
 import br.com.mariojp.todo.databinding.ActivityFormularioBinding
+
 
 class FormularioActivity : AppCompatActivity() {
 
@@ -44,22 +48,38 @@ class FormularioActivity : AppCompatActivity() {
         binding.activityFormularioSalvar.setOnClickListener {
             val db = ToDoDatabase.instancia(this)
             val toDoItemDao = db.toDoItemDao()
+            var id : Long = 0
             if(this::item.isInitialized) {
-                val itemNew = ToDoItem(
-                    this.item.id,
-                    binding.activityFormularioTitle.text.toString(),
-                    binding.activityFormularioDescription.text.toString(),
-                )
-                toDoItemDao.update(itemNew)
-            }else {
-                val itemNew = ToDoItem(
-                    0,
-                    binding.activityFormularioTitle.text.toString(),
-                    binding.activityFormularioDescription.text.toString(),)
-                toDoItemDao.adiciona(itemNew)
+                id = this.item.id
             }
+            val itemNew = ToDoItem(
+                id,
+                binding.activityFormularioTitle.text.toString(),
+                binding.activityFormularioDescription.text.toString(),
+            )
+            toDoItemDao.adiciona(itemNew)
             finish()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        if(this::item.isInitialized) {
+            menu!!.findItem(R.id.menu_item_remover).isVisible = true
+        }
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.menu_item_remover -> {
+                val db = ToDoDatabase.instancia(this)
+                val toDoItemDao = db.toDoItemDao()
+                toDoItemDao.remove(this.item)
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 
