@@ -22,5 +22,8 @@ interface ToDoItemDao {
     @Update
     fun update(itemNew: ToDoItem)
 
+    @Insert
+    fun adicionaAll(note: List<ToDoItem>)
+
 
 }
